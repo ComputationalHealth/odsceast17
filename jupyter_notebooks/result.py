@@ -8,7 +8,7 @@ from datetime import timedelta
 
 
 # random lab function
-def lab():
+def lab(ovt):
 
     CMP = {
         'sodium':int(),
@@ -28,7 +28,7 @@ def lab():
     }
 
     x = random.randint(0, 1)
-    if x == 0:
+    if ovt == 'CMP':
         CMP['sodium'] = random.randint(111,180)
         CMP['potassium'] = random.randint(2,9)
         CMP['chloride'] = random.randint(53,140)
@@ -45,6 +45,33 @@ def lab():
         CBC['wbc'] = random.randint(1,300)
         CBC['platelet'] = random.randint(2,999)
         return CBC
+
+def hl7_generator():
+
+    hl7 = {
+        '***date_time_message***':str(),
+        '***universal_service_id***':str(),
+        '***req_time***':str(),
+        '***obs_time***':str(),
+        '***obs_end_time***':str(),
+        '***method***':str(),
+        '***set_id***':str(),
+        '***obs_id***':str(),
+        '***obs_sub_id***':str(),
+        '***obs_result***':str(),
+        '***obs_result_units***':str(),
+        '***obx_obs_time***':str(),
+        '***obx_method***':str()
+    }
+    
+    x = random.randint(0, 1)
+    if x == 0:
+        hl7['***universal_service_id***'] = '123^COMPREHENSIVE METABOLIC PANEL'
+
+        
+
+        hl7['***date_time_message***'] = datetime.now()
+
 
 # result object
 class Result:
