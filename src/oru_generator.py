@@ -4,11 +4,19 @@ import time
 
 import observation
 
+from kafka import KafkaProducer
 
 
 NEW_LINE = '\n'
 SLEEP = 5
 NUMBER_MESSAGES = 2
+
+KAFKA_BROKERS = "192.168.99.100:6667"
+KAFKA_TOPIC = "default-test"
+# KAFKA_BROKERS = os.getenv("KAFKA_BROKERS", "localhost:6667")
+# KAFKA_TOPIC = os.getenv("KAFKA_TOPIC", "default-test")
+
+KafkaProducer = KafkaProducer(bootstrap_servers=KAFKA_BROKERS)
 
 while 1:
     for _ in range(NUMBER_MESSAGES):
@@ -40,5 +48,7 @@ while 1:
 
         # send HL7_MESSAGE to Kafka
         print (HL7_MESSAGE)
+        KafkaProducer.send(KAFKA_TOPIC, HL7_MESSAGE)
 
+    KafkaProducer.flush()
     time.sleep(SLEEP)
