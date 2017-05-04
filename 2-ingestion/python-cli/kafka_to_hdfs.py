@@ -8,50 +8,36 @@ i = 0
 file = 0
 queue = []
 
-data = {}
-data['messages'] = []
-
-hl7 = {
-	'msg_ts':str(),
-	'coll_ts':str(),
-	'order_ts':str(),
-	'result_ts':str(),
-	'component':str(),
-	'value':str(),
-	'unit':str(),
-	'method':str()
-}
-
 for msg in kafka_client:
 	i = i + 1
 
 	queue.append(msg.value)
-
-	for seg in segments:
-		fields = seg.split('|')
-		if fields[0] == 'MSH':
-			hl7['msg_ts'] = fields[6]
-		if fields[0] == 'OBX':
-			hl7['component'] = fields[3]
-			hl7['value'] = fields[5]
-			hl7['unit'] = fields[6]
-			hl7['result_ts'] = fields[14]
-			hl7['method'] = fields[18]
-		if fields[0] == 'OBR':
-			hl7['order_ts'] = fields[6]
-			hl7['coll_ts'] = fields[8]
 	
-	data['messages'].append(hl7)
-	keys = hl7.keys()
-	with open('test.csv', 'wb') as output_file:
-		dict_writer = csv.DictWriter(output_file, keys)
-		dict_writer.writeheader()
-		dict_writer.writerows(data['messages'])
-
-	if i % 100 == 0:
-		with hdfs_client.write("/tmp/test_" + str(file) + ".hl7") as writer:
+	if i % 1000 == 0:
+		with hdfs_client.write("/labdata/kafka/test_" + str(file) + ".hl7") as writer:
 			for cur in queue:
-				writer.write(cur)
+				hl7 = {}
+				hl7_list = []
+
+				for seg in cur.split('\n'):
+					fields = seg.split('|')
+					if fields[0] == 'MSH':
+						hl7['msh_ts'] = fields[6]
+					if fields[0] == 'OBX':
+						hl7['component'] = fields[3]
+						hl7['value'] = fields[5]
+						hl7['unit'] = fields[6]
+						hl7['result_ts'] = fields[14]
+						hl7['method'] = fields[18]
+
+						hl7_list.append(hl7)
+					if fields[0] == 'OBR':
+						hl7['req_ts'] = fields[6]
+						hl7['obr_ts'] = fields[8]
+				
+				for cur_hl7 in hl7_list:
+					cur_line = [cur_hl7['msh_ts'], cur_hl7['req_ts'], cur_hl7['obr_ts'], cur_hl7['component'], cur_hl7['value'], cur_hl7['unit'], cur_hl7['result_ts'], cur_hl7['method']]
+					writer.write(','.join(cur_line) + '\n')
 
 		file = file + 1
 		queue = []
