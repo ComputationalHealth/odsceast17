@@ -2,6 +2,8 @@
 
 * Environment preparation
 ** VirtualBox
+** Add Sandbox entry to your local machine's hosts file:
+*** 127.0.0.1	sandbox.hortonworks.com
 ** Hortonworks Sandbox (HDP 2.6)
 *** After import of image, add port 6667 and 22 to the NAT port forwarding
 *** From the command line (or by SSH after enabling port 22 forwarding; user: root; pass: hadoop), run: 
