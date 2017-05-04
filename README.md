@@ -18,3 +18,13 @@
 		wget https://raw.githubusercontent.com/ComputationalHealth/odsceast17/master/0-prereqs/.hdfscli.cfg
 		```
 	* Install NiFi in Sandbox via Ambari
+
+## Host Configuration
+* If you want to run the IPython Notebooks to generate the normally distributed data, you will need a Python environment with matplotlib, pandas, and the kafka library. To create a conda environment with these dependencies:
+	```shell
+	conda create --n odscHealth python=3
+	activate odscHealth
+	conda install notebook ipykernel matplotlib pandas
+	pip install kafka
+	jupyter notebook --notebook-dir=/path/to/git/repo
+	```
