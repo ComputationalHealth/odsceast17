@@ -1,12 +1,9 @@
 #!/usr/bin/env python
-import json
-import uuid
 import random
 import numpy as np
 
 from datetime import datetime
 from datetime import timedelta
-
 
 # random lab function
 def oru():
@@ -78,12 +75,5 @@ class Observation:
         self.obs_end_time = (self.obx_time - timedelta(minutes=np.random.normal(2, 0.5)))
         self.req_time = (self.obs_end_time - timedelta(minutes=np.random.normal(20, 5)))
            
-        
         # result status
         self.result_status = 'Verified'
-
-
-    # dumps Result object in json
-    def tojson(self):
-        return json.dumps(self, default=lambda o: o.__dict__,
-                          sort_keys=False, indent=4)
