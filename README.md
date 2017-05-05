@@ -8,7 +8,7 @@
 	* After import of image, add port 6667 and 22 to the NAT port forwarding
 	* From the command line (or by SSH after enabling port 22 forwarding; user: root; pass: hadoop), run: 
 		```shell
-		curl https://raw.githubusercontent.com/ComputationalHealth/odsceast17/master/0-prereqs/start_sandbox.sh
+		curl -o start_sandbox.sh https://raw.githubusercontent.com/ComputationalHealth/odsceast17/master/0-prereqs/start_sandbox.sh
 		./start_sandbox.sh
 		chmod 755 start_sandbox.sh
 		```
@@ -16,7 +16,7 @@
 		```shell
 		yum install python-pip (may need to run twice to get past repo outdates)
 		pip install kafka hdfs
-		curl https://raw.githubusercontent.com/ComputationalHealth/odsceast17/master/0-prereqs/.hdfscli.cfg
+		curl -o .hdfscli.cfg https://raw.githubusercontent.com/ComputationalHealth/odsceast17/master/0-prereqs/.hdfscli.cfg
 		```
 	* Install NiFi in Sandbox via Ambari
 	* Make sure Kafka broker is started (or go to Service Actions -> Start if in Stopped status)
