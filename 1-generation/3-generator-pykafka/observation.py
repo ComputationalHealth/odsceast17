@@ -71,8 +71,15 @@ class Observation:
 
         # time objects
         self.msh_time = datetime.now()
-        self.obx_time = (self.msh_time - timedelta(minutes=np.random.normal(10, 1)))
-        self.obs_end_time = (self.obx_time - timedelta(minutes=np.random.normal(2, 0.5)))
+        
+
+        self.obx_time = (self.msh_time - timedelta(minutes=np.random.normal(1, 0.5)))
+        
+        if self.method == 'SYSMEX':
+        	self.obs_end_time = (self.obx_time - timedelta(minutes=np.random.normal(25, 5)))
+        else:
+        	self.obs_end_time = (self.obx_time - timedelta(minutes=np.random.normal(15, 3)))        
+
         self.req_time = (self.obs_end_time - timedelta(minutes=np.random.normal(20, 5)))
            
         # result status

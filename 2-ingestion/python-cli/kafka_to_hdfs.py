@@ -19,7 +19,7 @@ for msg in kafka_client:
 				hl7 = {}
 				hl7_list = []
 
-				for seg in cur.split('\n'):
+				for seg in hl7_msg.split('\n'):
 					fields = seg.split('|')
 					if fields[0] == 'MSH':
 						hl7['msh_ts'] = fields[6]
@@ -30,7 +30,7 @@ for msg in kafka_client:
 						hl7['result_ts'] = fields[14]
 						hl7['method'] = fields[18]
 
-						hl7_list.append(hl7)
+						hl7_list.append(hl7.copy())
 					if fields[0] == 'OBR':
 						hl7['req_ts'] = fields[6]
 						hl7['obr_ts'] = fields[8]

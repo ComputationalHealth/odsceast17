@@ -19,6 +19,7 @@
 		curl https://raw.githubusercontent.com/ComputationalHealth/odsceast17/master/0-prereqs/.hdfscli.cfg
 		```
 	* Install NiFi in Sandbox via Ambari
+	* Make sure Kafka broker is started (or go to Service Actions -> Start if in Stopped status)
 
 ## Host Configuration
 * If you want to run the IPython Notebooks to generate the normally distributed data, you will need a Python environment with matplotlib, pandas, and the kafka library. To create a conda environment with these dependencies:

@@ -1,1 +1,0 @@
-update kafka_to_hdfs.py to write csv instead of straight hl7 to hdfs
