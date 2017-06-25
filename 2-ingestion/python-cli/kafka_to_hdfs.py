@@ -14,7 +14,7 @@ for msg in kafka_client:
 	queue.append(msg.value)
 	
 	if i % 1000 == 0:
-		with hdfs_client.write("/labdata/kafka/test_" + str(file) + ".hl7") as writer:
+		with hdfs_client.write("/tmp/test_" + str(file) + ".hl7") as writer:
 			for cur in queue:
 				hl7 = {}
 				hl7_list = []
